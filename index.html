@@ -1,92 +1,87 @@
-<!doctype html>
-<html class="no-js" lang="">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+<html>
+<head>
+  <title>Willy Wonka's Programming Oompa Loompas</title>
+  <link rel="shortcut icon" href="favicon.ico">
+  <link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="favicon-16x16.png" sizes="16x16">
 
-        <link rel="stylesheet" href="css/bootstrap.min.css">
-        <style>
-            body {
-                padding-top: 50px;
-                padding-bottom: 20px;
-            }
-        </style>
-        <link rel="stylesheet" href="css/bootstrap-theme.min.css">
-        <link rel="stylesheet" href="css/main.css">
+  <link href="//fonts.googleapis.com/css?family=Monoton" rel="stylesheet">
 
-        <!--[if lt IE 9]>
-            <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-            <script>window.html5 || document.write('<script src="js/vendor/html5shiv.js"><\/script>')</script>
-        <![endif]-->
-    </head>
-    <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">Project name</a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <form class="navbar-form navbar-right" role="form">
-            <div class="form-group">
-              <input type="text" placeholder="Email" class="form-control">
-            </div>
-            <div class="form-group">
-              <input type="password" placeholder="Password" class="form-control">
-            </div>
-            <button type="submit" class="btn btn-success">Sign in</button>
-          </form>
-        </div><!--/.navbar-collapse -->
-      </div>
-    </nav>
+  <style>
+    html, * {
+      padding: 0;
+      margin: 0;
+      overflow: hidden;
+    }
 
-    <!-- Main jumbotron for a primary marketing message or call to action -->
-    <div class="jumbotron">
-      <div class="container">
-        <h1>Hello, world!</h1>
-        <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-        <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
-      </div>
-    </div>
+    h1 {
+      color: #0F0;
+      position: absolute;
+      font-family: 'Monoton', cursive;
+      font-weight: 100;
+    }
 
-    <div class="container">
-      <!-- Example row of columns -->
-      <div class="row">
-        <div class="col-md-4">
-          <h2>Heading</h2>
-          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-        </div>
-        <div class="col-md-4">
-          <h2>Heading</h2>
-          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-       </div>
-        <div class="col-md-4">
-          <h2>Heading</h2>
-          <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-        </div>
-      </div>
+    body {
+      font-size: 2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>WWPOL</h1>
+  <canvas id="q"></canvas>
 
-      <hr>
+  <script>
+    var s = window.screen;
+    var width = q.width = s.width;
+    var height = q.height = s.height;
+    var letters = Array(256).join(1).split('');
+    var noOfDrops = 25;
+    var fallingDrops = [];
+    var canvas = document.getElementById('q');
 
-      <footer>
-        <p>&copy; Company 2015</p>
-      </footer>
-    </div> <!-- /container -->        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
+    window.onload = function() {
+      for (var i = 0; i < noOfDrops; i++) {
+          var fallingDr = new Object();
+          fallingDr["image"] =  new Image();
+          var imgNum = Math.random();
+          fallingDr.image.src = 'img/head.png';
+          fallingDr["x"] = Math.random() * width;
+          fallingDr["y"] = -50;
+          fallingDr["speed"] = 3 + Math.random() * 5;
+          fallingDrops.push(fallingDr);
+      }
 
-        <script src="js/vendor/bootstrap.min.js"></script>
+      function draw() {
+        q.getContext('2d').fillStyle='rgba(0,0,0,.05)';
+        q.getContext('2d').fillRect(0,0,width,height);
+        q.getContext('2d').fillStyle='#0F0';
+        letters.map(function(y_pos, index){
+          text = String.fromCharCode(1e3+Math.random()*33);
+          x_pos = index * 10;
+          q.getContext('2d').fillText(text, x_pos, y_pos);
+          letters[index] = (y_pos > 758 + Math.random() * 1e4) ? 0 : y_pos + 10;
+        });
+        for (var i=0; i< noOfDrops; i++) {
+          q.getContext('2d').drawImage (fallingDrops[i].image, fallingDrops[i].x, fallingDrops[i].y); //The rain drop
+          fallingDrops[i].y += fallingDrops[i].speed; //Set the falling speed
+          if (fallingDrops[i].y > height) {  //Repeat the raindrop when it falls out of view
+            fallingDrops[i].y = -50 //Account for the image size
+            fallingDrops[i].x = Math.random() * width;    //Make it appear randomly along the width    
+          }
+        }
+        window.requestAnimationFrame(draw);
+      };
+      window.requestAnimationFrame(draw);
+    }
 
-        <script src="js/main.js"></script>
-    </body>
+    window.onresize = function() {
+      s = window.screen;
+      width = q.width = s.width;
+      height = q.height = s.height;
+    }
+  </script>
+</body>
 </html>
