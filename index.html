@@ -34,6 +34,7 @@
   <canvas id="q"></canvas>
 
   <script>
+    var start = performance.now();
     var s = window.screen;
     var width = q.width = window.innerWidth;
     var height = q.height = window.innerHeight;
@@ -49,7 +50,7 @@
           var imgNum = Math.random();
           fallingDr.image.src = 'img/head.png';
           fallingDr["x"] = Math.random() * width;
-          fallingDr["y"] = -50;
+          fallingDr["y"] = Math.random() * height * -1;
           fallingDr["speed"] = 3 + Math.random() * 5;
           fallingDrops.push(fallingDr);
       }
@@ -64,12 +65,14 @@
           q.getContext('2d').fillText(text, x_pos, y_pos);
           letters[index] = (y_pos > 758 + Math.random() * 1e4) ? 0 : y_pos + 10;
         });
-        for (var i=0; i< noOfDrops; i++) {
-          q.getContext('2d').drawImage (fallingDrops[i].image, fallingDrops[i].x, fallingDrops[i].y); //The rain drop
-          fallingDrops[i].y += fallingDrops[i].speed; //Set the falling speed
-          if (fallingDrops[i].y > height) {  //Repeat the raindrop when it falls out of view
-            fallingDrops[i].y = -50 //Account for the image size
-            fallingDrops[i].x = Math.random() * width;    //Make it appear randomly along the width    
+        if (performance.now() - start >= 3000) {
+          for (var i=0; i< noOfDrops; i++) {
+            q.getContext('2d').drawImage (fallingDrops[i].image, fallingDrops[i].x, fallingDrops[i].y); //The rain drop
+            fallingDrops[i].y += fallingDrops[i].speed; //Set the falling speed
+            if (fallingDrops[i].y > height) {  //Repeat the raindrop when it falls out of view
+              fallingDrops[i].y = -100 //Account for the image size
+              fallingDrops[i].x = Math.random() * width;    //Make it appear randomly along the width    
+            }
           }
         }
         window.requestAnimationFrame(draw);
